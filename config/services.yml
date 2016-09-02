@@ -1,0 +1,9 @@
+services:
+    AustinMaddox.s3.listener:
+        class: AustinMaddox\s3\event\main_listener
+        arguments:
+            - @config
+            - @template
+            - @user
+        tags:
+            - { name: event.listener }
