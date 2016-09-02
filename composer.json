@@ -6,7 +6,7 @@
   "version": "0.1.0",
   "keywords": ["phpbb", "extension", "amazon web service", "AWS", "simple storage service", "s3"],
   "time": "2016-09-01",
-  "license": "GPL-3.0",
+  "license": "GPL-2.0",
   "authors": [{
     "name": "Austin Maddox",
     "email": "austin@maddoxbox.com",
