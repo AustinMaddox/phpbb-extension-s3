@@ -1,8 +1,8 @@
 <?php
 /**
  *
- * @package       phpBB Extension - Acme Demo
- * @copyright (c) 2013 phpBB Group
+ * @package       phpBB Extension - S3
+ * @copyright (c) 2016 Austin Maddox
  * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
