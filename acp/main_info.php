@@ -16,7 +16,7 @@ class main_info
         return [
             'filename' => '\AustinMaddox\s3\acp\main_module',
             'title'    => 'ACP_S3_TITLE',
-            'version'  => '0.1.1',
+            'version'  => '0.1.2',
             'modes'    => [
                 'settings' => [
                     'title' => 'ACP_S3',
