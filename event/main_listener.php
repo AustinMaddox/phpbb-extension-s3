@@ -168,27 +168,30 @@ class main_listener implements EventSubscriberInterface
 
         $block_array = $event['block_array'];
         $attachment = $event['attachment'];
+
         $key = 'thumb_' . $attachment['physical_filename'];
-        $thumbnail = $phpbb_root_path . $this->config['upload_path'] . '/' . $key;
+        $s3_link_thumb = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
+        $s3_link_fullsize = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+        $local_thumbnail = $phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
         if ($this->config['img_create_thumbnail']) {
 
             // Existence on local filesystem check. Just in case "Create thumbnail" was turned off at some point in the past and thumbnails weren't generated.
-            if (file_exists($thumbnail)) {
+            if (file_exists($local_thumbnail)) {
 
                 // Existence on S3 check. Since this method runs on every page load, we don't want to upload the thumbnail multiple times.
                 if (!$this->s3_client->doesObjectExist($this->config['s3_bucket'], $key)) {
 
                     // Upload *only* the thumbnail to S3.
-                    $body = file_get_contents($thumbnail);
+                    $body = file_get_contents($local_thumbnail);
                     $this->uploadFileToS3($key, $body, $attachment['mimetype']);
                 }
-
-                $block_array['THUMB_IMAGE'] = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/thumb_' . $attachment['physical_filename'];
+                $block_array['THUMB_IMAGE'] = $s3_link_thumb;
+                $block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
             }
         }
 
-        $block_array['U_DOWNLOAD_LINK'] = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+        $block_array['U_INLINE_LINK'] = $s3_link_fullsize;
         $event['block_array'] = $block_array;
     }
 
