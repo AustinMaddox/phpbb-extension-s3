@@ -3,7 +3,7 @@
  *
  * @package       phpBB Extension - S3
  * @copyright (c) 2016 Austin Maddox
- * @license       GNU General Public License, version 2 (GPL-2.0)
+ * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 

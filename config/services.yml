@@ -1,5 +1,5 @@
 services:
-    AustinMaddox.phpbb-extension-s3.listener:
+    AustinMaddox.s3.listener:
         class: AustinMaddox\s3\event\main_listener
         arguments:
             - @config
