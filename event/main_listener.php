@@ -186,9 +186,9 @@ class main_listener implements EventSubscriberInterface
                     $body = file_get_contents($local_thumbnail);
                     $this->uploadFileToS3($key, $body, $attachment['mimetype']);
                 }
-                $block_array['THUMB_IMAGE'] = $s3_link_thumb;
-                $block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
             }
+            $block_array['THUMB_IMAGE'] = $s3_link_thumb;
+            $block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
         }
 
         $block_array['U_INLINE_LINK'] = $s3_link_fullsize;
