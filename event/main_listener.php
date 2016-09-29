@@ -52,6 +52,9 @@ class main_listener implements EventSubscriberInterface
                 'secret' => $this->config['s3_aws_secret_access_key'],
             ],
             'debug'       => false,
+            'http'        => [
+                'verify' => false,
+            ],
             'region'      => $this->config['s3_region'],
             'version'     => 'latest',
         ]);
