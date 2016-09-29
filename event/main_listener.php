@@ -171,15 +171,21 @@ class main_listener implements EventSubscriberInterface
         $key = 'thumb_' . $attachment['physical_filename'];
         $thumbnail = $phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
-        if ($this->config['img_create_thumbnail'] && file_exists($thumbnail)) {
-            // Existence on S3 check. Since this method runs on every page load, we don't want to upload the thumbnail multiple times.
-            if (!$this->s3_client->doesObjectExist($this->config['s3_bucket'], $key)) {
-                // Upload *only* the thumbnail to S3.
-                $body = file_get_contents($thumbnail);
-                $this->uploadFileToS3($key, $body, $attachment['mimetype']);
-            }
+        if ($this->config['img_create_thumbnail']) {
 
-            $block_array['THUMB_IMAGE'] = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/thumb_' . $attachment['physical_filename'];
+            // Existence on local filesystem check. Just in case "Create thumbnail" was turned off at some point in the past and thumbnails weren't generated.
+            if (file_exists($thumbnail)) {
+
+                // Existence on S3 check. Since this method runs on every page load, we don't want to upload the thumbnail multiple times.
+                if (!$this->s3_client->doesObjectExist($this->config['s3_bucket'], $key)) {
+
+                    // Upload *only* the thumbnail to S3.
+                    $body = file_get_contents($thumbnail);
+                    $this->uploadFileToS3($key, $body, $attachment['mimetype']);
+                }
+
+                $block_array['THUMB_IMAGE'] = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/thumb_' . $attachment['physical_filename'];
+            }
         }
 
         $block_array['U_DOWNLOAD_LINK'] = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
