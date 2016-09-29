@@ -19,7 +19,7 @@
     "php": ">=5.5.0"
   },
   "extra": {
-    "display-name": "S3",
+    "display-name": "AWS S3",
     "soft-require" : {
       "phpbb/phpbb": ">=3.1.0-RC2,<3.2@dev"
     }
