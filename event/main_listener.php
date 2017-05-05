@@ -71,7 +71,6 @@ class main_listener implements EventSubscriberInterface
             'core.validate_config_variable'                 => 'validate_config_variable',
             'core.modify_uploaded_file'                     => 'modify_uploaded_file',
             'core.delete_attachments_from_filesystem_after' => 'delete_attachments_from_filesystem_after',
-            'core.posting_modify_message_text'              => 'posting_modify_message_text',
             'core.parse_attachments_modify_template_data'   => 'parse_attachments_modify_template_data',
         ];
     }
