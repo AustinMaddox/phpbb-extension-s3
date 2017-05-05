@@ -9,7 +9,6 @@
 
 namespace AustinMaddox\s3\event;
 
-use Aws\Exception\MultipartUploadException;
 use Aws\S3\S3Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -27,6 +26,10 @@ class main_listener implements EventSubscriberInterface
     /** @var \phpbb\user */
     protected $user;
 
+    /** @var $phpbb_root_path */
+    protected $phpbb_root_path;
+
+    /** @var S3Client */
     protected $s3_client;
 
     /**
@@ -35,15 +38,16 @@ class main_listener implements EventSubscriberInterface
      * @param \phpbb\config\config     $config   Config object
      * @param \phpbb\template\template $template Template object
      * @param \phpbb\user              $user     User object
+     * @param                          $phpbb_root_path
      *
-     * @return \AustinMaddox\s3\event\main_listener
      * @access public
      */
-    public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user)
+    public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path)
     {
         $this->config = $config;
         $this->template = $template;
         $this->user = $user;
+        $this->phpbb_root_path = $phpbb_root_path;
 
         // Instantiate an AWS S3 client.
         $this->s3_client = new S3Client([
@@ -99,11 +103,6 @@ class main_listener implements EventSubscriberInterface
             // Store the error and input event data.
             $error = $event['error'];
 
-            // Add error message if the input is not a valid AWS Access Key Id.
-//            if (!preg_match('/^UA-\d{4,9}-\d{1,4}$/', $input)) {
-//                $error[] = $this->user->lang('ACP_S3_AWS_ACCESS_KEY_ID', $input);
-//            }
-
             // Update error event data.
             $event['error'] = $error;
         }
@@ -116,13 +115,11 @@ class main_listener implements EventSubscriberInterface
      */
     public function modify_uploaded_file($event)
     {
-        global $phpbb_root_path;
-
         $filedata = $event['filedata'];
 
         // Fullsize
         $key = $filedata['physical_filename'];
-        $body = file_get_contents($phpbb_root_path . $this->config['upload_path'] . '/' . $key);
+        $body = file_get_contents($this->phpbb_root_path . $this->config['upload_path'] . '/' . $key);
         $this->uploadFileToS3($key, $body, $filedata['mimetype']);
     }
 
@@ -142,20 +139,6 @@ class main_listener implements EventSubscriberInterface
     }
 
     /**
-     * This event allows you to modify message text before parsing
-     *
-     * Failed attempt at catching deletes of `is_orphan` attachments.
-     * https://www.phpbb.com/community/viewtopic.php?f=461&t=2380221
-     *
-     * @param $event
-     */
-    public function posting_modify_message_text($event)
-    {
-//        error_log(__METHOD__);
-//        error_log(print_r($event['post_data'], true));
-    }
-
-    /**
      * Use this event to modify the attachment template data.
      *
      * This event is triggered once per attachment.
@@ -164,15 +147,13 @@ class main_listener implements EventSubscriberInterface
      */
     public function parse_attachments_modify_template_data($event)
     {
-        global $phpbb_root_path;
-
         $block_array = $event['block_array'];
         $attachment = $event['attachment'];
 
         $key = 'thumb_' . $attachment['physical_filename'];
-        $s3_link_thumb = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
-        $s3_link_fullsize = 'http://' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
-        $local_thumbnail = $phpbb_root_path . $this->config['upload_path'] . '/' . $key;
+        $s3_link_thumb = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
+        $s3_link_fullsize = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+        $local_thumbnail = $this->phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
         if ($this->config['img_create_thumbnail']) {
 
@@ -204,13 +185,6 @@ class main_listener implements EventSubscriberInterface
      */
     private function uploadFileToS3($key, $body, $content_type)
     {
-        $result = null;
-        try {
-            $result = $this->s3_client->upload($this->config['s3_bucket'], $key, $body, 'public-read', ['params' => ['ContentType' => $content_type]]);
-        } catch (MultipartUploadException $e) {
-            error_log('MultipartUpload Failed', [$e->getMessage()]);
-        }
-//        $object_url = ($result['ObjectURL']) ? $result['ObjectURL'] : $result['Location'];
-//        error_log($object_url);
+        $this->s3_client->upload($this->config['s3_bucket'], $key, $body, 'public-read', ['params' => ['ContentType' => $content_type]]);
     }
 }
