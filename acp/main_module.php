@@ -28,11 +28,11 @@ class main_module
             }
 
             if (!preg_match('/[A-Z0-9]{20}/', $request->variable('s3_aws_access_key_id', ''))) {
-                trigger_error($user->lang('ACP_S3_AWS_ACCESS_KEY_ID_INVALID', $request->variable('s3_aws_access_key_id', '')) . adm_back_link($this->u_action));
+                trigger_error($user->lang('ACP_S3_AWS_ACCESS_KEY_ID_INVALID', $request->variable('s3_aws_access_key_id', '')) . adm_back_link($this->u_action), E_USER_WARNING));
             }
 
             if (!preg_match('/[A-Za-z0-9/+=]{40}/', $request->variable('s3_aws_secret_access_key', ''))) {
-                trigger_error($user->lang('ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID', $request->variable('s3_aws_secret_access_key', '')) . adm_back_link($this->u_action));
+                trigger_error($user->lang('ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID', $request->variable('s3_aws_secret_access_key', '')) . adm_back_link($this->u_action), E_USER_WARNING));
             }
 
             $config->set('s3_aws_access_key_id', $request->variable('s3_aws_access_key_id', ''));
