@@ -130,7 +130,7 @@ class main_listener implements EventSubscriberInterface
     public function delete_attachments_from_filesystem_after($event)
     {
         foreach ($event['physical'] as $physical_file) {
-            $result = $this->s3_client->deleteObject([
+            $this->s3_client->deleteObject([
                 'Bucket' => $this->config['s3_bucket'],
                 'Key'    => $physical_file['filename'],
             ]);
