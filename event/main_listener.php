@@ -2,7 +2,7 @@
 /**
  *
  * @package       phpBB Extension - S3
- * @copyright (c) 2016 Austin Maddox
+ * @copyright (c) 2017 Austin Maddox
  * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
@@ -68,7 +68,7 @@ class main_listener implements EventSubscriberInterface
     {
         return [
             'core.user_setup'                               => 'user_setup',
-            'core.validate_config_variable'                 => 'validate_config_variable',
+            'core.validate_config_variable'                 => [['validate_s3_aws_access_key_id'], ['validate_s3_aws_secret_access_key']],
             'core.modify_uploaded_file'                     => 'modify_uploaded_file',
             'core.delete_attachments_from_filesystem_after' => 'delete_attachments_from_filesystem_after',
             'core.parse_attachments_modify_template_data'   => 'parse_attachments_modify_template_data',
@@ -86,14 +86,14 @@ class main_listener implements EventSubscriberInterface
     }
 
     /**
-     * Validate the AWS Access Key Id
+     * Validate the AWS Access Key Id.
      *
      * @param object $event The event object
      *
      * @return null
      * @access public
      */
-    public function validate_config_variable($event)
+    public function validate_s3_aws_access_key_id($event)
     {
         $input = $event['cfg_array']['s3_aws_access_key_id'];
 
@@ -101,6 +101,38 @@ class main_listener implements EventSubscriberInterface
         if (($event['config_definition']['validate'] == 's3_aws_access_key_id') && ($input !== '')) {
             // Store the error and input event data.
             $error = $event['error'];
+
+            // Add error message if the input is not a valid AWS Access Key Id.
+            if (!preg_match('/[A-Z0-9]{20})/', $input)) {
+                $error[] = $this->user->lang('ACP_S3_AWS_ACCESS_KEY_ID_INVALID', $input);
+            }
+
+            // Update error event data.
+            $event['error'] = $error;
+        }
+    }
+
+    /**
+     * Validate the AWS Secret Access Key.
+     *
+     * @param object $event The event object
+     *
+     * @return null
+     * @access public
+     */
+    public function validate_s3_aws_secret_access_key($event)
+    {
+        $input = $event['cfg_array']['s3_aws_secret_access_key'];
+
+        // Check if the validate test is for s3.
+        if (($event['config_definition']['validate'] == 's3_aws_secret_access_key') && ($input !== '')) {
+            // Store the error and input event data.
+            $error = $event['error'];
+
+            // Add error message if the input is not a valid AWS Secret Access Key.
+            if (!preg_match('/[A-Za-z0-9/+=]{40}/', $input)) {
+                $error[] = $this->user->lang('ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID', $input);
+            }
 
             // Update error event data.
             $event['error'] = $error;

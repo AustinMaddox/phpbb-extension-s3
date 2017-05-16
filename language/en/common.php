@@ -21,11 +21,11 @@ $lang = array_merge($lang, [
 
     'ACP_S3_AWS_ACCESS_KEY_ID'         => 'AWS Access Key Id',
     'ACP_S3_AWS_ACCESS_KEY_ID_EXPLAIN' => 'Enter your AWS Access Key Id for S3, e.g.: <samp>AKIAIOSFODNN7EXAMPLE</samp>.',
-    'ACP_S3_AWS_ACCESS_KEY_ID_INVALID' => '“%s” is not a valid AWS Access Key Id.',
+    'ACP_S3_AWS_ACCESS_KEY_ID_INVALID' => '“%s” is not a valid AWS Access Key Id. It must match the regular expression <code>/[A-Z0-9]{20})/</code>',
 
     'ACP_S3_AWS_SECRET_ACCESS_KEY'         => 'AWS Secret Access Key',
     'ACP_S3_AWS_SECRET_ACCESS_KEY_EXPLAIN' => 'Enter your AWS Secret Access Key for S3, e.g.: <samp>wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</samp>.',
-    'ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID' => '“%s” is not a valid AWS Secret Access Key.',
+    'ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID' => '“%s” is not a valid AWS Secret Access Key. It must match the regular expression <code>/[A-Za-z0-9/+=]{40}/</code>',
 
     'ACP_S3_REGION'         => 'AWS S3 Region',
     'ACP_S3_REGION_EXPLAIN' => 'Enter the S3 region where your bucket resides, e.g.: <samp>us-west-2</samp>.',
