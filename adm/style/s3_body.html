@@ -4,6 +4,12 @@
 
 <p>To successfully send requests to AWS APIs, you need to have a valid set of security credentials called <strong>access keys</strong>. To learn more about AWS access keys, visit the <a href="https://aws.amazon.com/developers/access-keys/" target="_blank">About Access Keys page</a> in the developer documentation.</p>
 
+<!-- IF S3_ERROR -->
+<div class="errorbox"><h3>{L_WARNING}</h3>
+    <p>{S3_ERROR}</p>
+</div>
+<!-- ENDIF -->
+
 <form id="acp_board" method="post" action="{U_ACTION}">
     <fieldset>
         <dl>
