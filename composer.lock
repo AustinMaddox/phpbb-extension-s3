@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c6601a8e3af362b420f9b906d7d67ea",
+    "content-hash": "11a65f1bd997ed5e9ffe7d52c2d4c384",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.27.0",
+            "version": "3.27.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "23fd97c5bc4aaa923b994f8876c86574ed84f27d"
+                "reference": "1eece595cdcac0f10616d6b631d0db0878de4f53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/23fd97c5bc4aaa923b994f8876c86574ed84f27d",
-                "reference": "23fd97c5bc4aaa923b994f8876c86574ed84f27d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1eece595cdcac0f10616d6b631d0db0878de4f53",
+                "reference": "1eece595cdcac0f10616d6b631d0db0878de4f53",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-05-04T22:43:46+00:00"
+            "time": "2017-05-17T22:37:49+00:00"
         },
         {
             "name": "composer/installers",
