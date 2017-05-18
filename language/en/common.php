@@ -34,4 +34,8 @@ $lang = array_merge($lang, [
     'ACP_S3_BUCKET'         => 'AWS S3 Bucket',
     'ACP_S3_BUCKET_EXPLAIN' => 'Enter the name of your S3 bucket, e.g.: <samp>example-bucket</samp>. The bucket must already be created in your AWS account.',
     'ACP_S3_BUCKET_INVALID' => '“%s” is not a valid S3 bucket name.',
+
+    'ACP_S3_TEST_MY_SETTINGS'         => 'Test AWS S3 Settings',
+    'ACP_S3_TEST_MY_SETTINGS_EXPLAIN' => 'Click this button to ensure your settings are configured correctly. Clicking this button will upload a test file to your S3 bucket and then subsequently delete it. If it succeeds, you are ready to begin using AWS S3 with your phpBB forum!',
+    'ACP_S3_TEST_MY_SETTINGS_BUTTON'  => 'Test My Settings',
 ]);

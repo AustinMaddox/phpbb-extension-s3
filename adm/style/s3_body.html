@@ -2,7 +2,8 @@
 
 <h1>{L_SETTINGS}</h1>
 
-<p>To successfully send requests to AWS APIs, you need to have a valid set of security credentials called <strong>access keys</strong>. To learn more about AWS access keys, visit the <a href="https://aws.amazon.com/developers/access-keys/" target="_blank">About Access Keys page</a> in the developer documentation.</p>
+<p>To successfully send requests to AWS APIs, you need to have a valid set of security credentials called <strong>access keys</strong>. To learn more about AWS access keys, visit
+    the <a href="https://aws.amazon.com/developers/access-keys/" target="_blank">About Access Keys page</a> in the developer documentation.</p>
 
 <!-- IF S3_ERROR -->
 <div class="errorbox"><h3>{L_WARNING}</h3>
@@ -47,6 +48,19 @@
             </dt>
             <dd><input type="text" id="s3_bucket" name="s3_bucket" value="{S3_BUCKET}" maxlength="255" size="30"></dd>
         </dl>
+
+        <hr/>
+
+        <dl>
+            <dt>
+                <label for="s3_bucket">{L_ACP_S3_TEST_MY_SETTINGS}</label>
+                <br>
+                <span>{L_ACP_S3_TEST_MY_SETTINGS_EXPLAIN}</span>
+            </dt>
+            <dd><input class="button2" type="button" id="test" name="test" value="{L_ACP_S3_TEST_MY_SETTINGS_BUTTON}"/></dd>
+        </dl>
+
+        <hr/>
 
         <p class="submit-buttons">
             <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}"/>&nbsp;

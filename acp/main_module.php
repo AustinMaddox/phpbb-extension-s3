@@ -36,6 +36,33 @@ class main_module
                 $errors[] = $user->lang('ACP_S3_AWS_SECRET_ACCESS_KEY_INVALID', $request->variable('s3_aws_secret_access_key', ''));
             }
 
+            try {
+                // Instantiate an AWS S3 client.
+                $s3_client = new \Aws\S3\S3Client([
+                    'credentials' => [
+                        'key'    => $request->variable('s3_aws_access_key_id', ''),
+                        'secret' => $request->variable('s3_aws_secret_access_key', ''),
+                    ],
+                    'debug'       => false,
+                    'http'        => [
+                        'verify' => false,
+                    ],
+                    'region'      => $request->variable('s3_region', ''),
+                    'version'     => 'latest',
+                ]);
+
+                // Upload a test file to ensure credentials are valid and everything is working properly.
+                $s3_client->upload($request->variable('s3_bucket', ''), 'test.txt', 'test body');
+
+                // Delete the test file.
+                $s3_client->deleteObject([
+                    'Bucket' => $request->variable('s3_bucket', ''),
+                    'Key'    => 'test.txt',
+                ]);
+            } catch (\Aws\S3\Exception\S3Exception $e) {
+                $errors[] = $e->getMessage();
+            }
+
             if (!count($errors)) {
                 $config->set('s3_aws_access_key_id', $request->variable('s3_aws_access_key_id', ''));
                 $config->set('s3_aws_secret_access_key', $request->variable('s3_aws_secret_access_key', ''));
