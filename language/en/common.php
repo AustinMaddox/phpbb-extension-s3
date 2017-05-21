@@ -29,13 +29,12 @@ $lang = array_merge($lang, [
 
     'ACP_S3_REGION'         => 'AWS S3 Region',
     'ACP_S3_REGION_EXPLAIN' => 'Enter the S3 region where your bucket resides, e.g.: <samp>us-west-2</samp>.',
-    'ACP_S3_REGION_INVALID' => '“%s” is not a valid S3 region.',
+    'ACP_S3_REGION_INVALID' => 'You must enter a valid S3 region. For a list of the regions supported by Amazon S3, see the documentation here: http://docs.aws.amazon.com/general/latest/gr/rande.html.',
 
     'ACP_S3_BUCKET'         => 'AWS S3 Bucket',
     'ACP_S3_BUCKET_EXPLAIN' => 'Enter the name of your S3 bucket, e.g.: <samp>example-bucket</samp>. The bucket must already be created in your AWS account.',
-    'ACP_S3_BUCKET_INVALID' => '“%s” is not a valid S3 bucket name.',
+    'ACP_S3_BUCKET_INVALID' => 'You must enter a valid S3 bucket. For help working with Amazon S3 buckets, see the documentation here: http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html',
 
-    'ACP_S3_TEST_MY_SETTINGS'         => 'Test AWS S3 Settings',
-    'ACP_S3_TEST_MY_SETTINGS_EXPLAIN' => 'Click this button to ensure your settings are configured correctly. Clicking this button will upload a test file to your S3 bucket and then subsequently delete it. If it succeeds, you are ready to begin using AWS S3 with your phpBB forum!',
-    'ACP_S3_TEST_MY_SETTINGS_BUTTON'  => 'Test My Settings',
+    'ACP_S3_IS_ENABLED'         => 'Is the extension enabled?',
+    'ACP_S3_IS_ENABLED_EXPLAIN' => 'Displays whether or not the extension is enabled and will use S3 for uploading and delivering your attachments.',
 ]);
