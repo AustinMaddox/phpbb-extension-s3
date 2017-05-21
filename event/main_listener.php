@@ -2,7 +2,7 @@
 /**
  *
  * @package       phpBB Extension - S3
- * @copyright (c) 2016 Austin Maddox
+ * @copyright (c) 2017 Austin Maddox
  * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
@@ -49,26 +49,27 @@ class main_listener implements EventSubscriberInterface
         $this->user = $user;
         $this->phpbb_root_path = $phpbb_root_path;
 
-        // Instantiate an AWS S3 client.
-        $this->s3_client = new S3Client([
-            'credentials' => [
-                'key'    => $this->config['s3_aws_access_key_id'],
-                'secret' => $this->config['s3_aws_secret_access_key'],
-            ],
-            'debug'       => false,
-            'http'        => [
-                'verify' => false,
-            ],
-            'region'      => $this->config['s3_region'],
-            'version'     => 'latest',
-        ]);
+        if ($this->config['s3_is_enabled']) {
+            // Instantiate an AWS S3 client.
+            $this->s3_client = new S3Client([
+                'credentials' => [
+                    'key'    => $this->config['s3_aws_access_key_id'],
+                    'secret' => $this->config['s3_aws_secret_access_key'],
+                ],
+                'debug'       => false,
+                'http'        => [
+                    'verify' => false,
+                ],
+                'region'      => $this->config['s3_region'],
+                'version'     => 'latest',
+            ]);
+        }
     }
 
     static public function getSubscribedEvents()
     {
         return [
             'core.user_setup'                               => 'user_setup',
-            'core.validate_config_variable'                 => 'validate_config_variable',
             'core.modify_uploaded_file'                     => 'modify_uploaded_file',
             'core.delete_attachments_from_filesystem_after' => 'delete_attachments_from_filesystem_after',
             'core.parse_attachments_modify_template_data'   => 'parse_attachments_modify_template_data',
@@ -86,40 +87,20 @@ class main_listener implements EventSubscriberInterface
     }
 
     /**
-     * Validate the AWS Access Key Id
-     *
-     * @param object $event The event object
-     *
-     * @return null
-     * @access public
-     */
-    public function validate_config_variable($event)
-    {
-        $input = $event['cfg_array']['s3_aws_access_key_id'];
-
-        // Check if the validate test is for s3.
-        if (($event['config_definition']['validate'] == 's3_aws_access_key_id') && ($input !== '')) {
-            // Store the error and input event data.
-            $error = $event['error'];
-
-            // Update error event data.
-            $event['error'] = $error;
-        }
-    }
-
-    /**
      * Event to modify uploaded file before submit to the post
      *
      * @param $event
      */
     public function modify_uploaded_file($event)
     {
-        $filedata = $event['filedata'];
+        if ($this->config['s3_is_enabled']) {
+            $filedata = $event['filedata'];
 
-        // Fullsize
-        $key = $filedata['physical_filename'];
-        $body = file_get_contents($this->phpbb_root_path . $this->config['upload_path'] . '/' . $key);
-        $this->uploadFileToS3($key, $body, $filedata['mimetype']);
+            // Fullsize
+            $key = $filedata['physical_filename'];
+            $body = file_get_contents($this->phpbb_root_path . $this->config['upload_path'] . '/' . $key);
+            $this->uploadFileToS3($key, $body, $filedata['mimetype']);
+        }
     }
 
     /**
@@ -129,11 +110,13 @@ class main_listener implements EventSubscriberInterface
      */
     public function delete_attachments_from_filesystem_after($event)
     {
-        foreach ($event['physical'] as $physical_file) {
-            $result = $this->s3_client->deleteObject([
-                'Bucket' => $this->config['s3_bucket'],
-                'Key'    => $physical_file['filename'],
-            ]);
+        if ($this->config['s3_is_enabled']) {
+            foreach ($event['physical'] as $physical_file) {
+                $this->s3_client->deleteObject([
+                    'Bucket' => $this->config['s3_bucket'],
+                    'Key'    => $physical_file['filename'],
+                ]);
+            }
         }
     }
 
@@ -146,33 +129,35 @@ class main_listener implements EventSubscriberInterface
      */
     public function parse_attachments_modify_template_data($event)
     {
-        $block_array = $event['block_array'];
-        $attachment = $event['attachment'];
+        if ($this->config['s3_is_enabled']) {
+            $block_array = $event['block_array'];
+            $attachment = $event['attachment'];
 
-        $key = 'thumb_' . $attachment['physical_filename'];
-        $s3_link_thumb = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
-        $s3_link_fullsize = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
-        $local_thumbnail = $this->phpbb_root_path . $this->config['upload_path'] . '/' . $key;
+            $key = 'thumb_' . $attachment['physical_filename'];
+            $s3_link_thumb = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
+            $s3_link_fullsize = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+            $local_thumbnail = $this->phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
-        if ($this->config['img_create_thumbnail']) {
+            if ($this->config['img_create_thumbnail']) {
 
-            // Existence on local filesystem check. Just in case "Create thumbnail" was turned off at some point in the past and thumbnails weren't generated.
-            if (file_exists($local_thumbnail)) {
+                // Existence on local filesystem check. Just in case "Create thumbnail" was turned off at some point in the past and thumbnails weren't generated.
+                if (file_exists($local_thumbnail)) {
 
-                // Existence on S3 check. Since this method runs on every page load, we don't want to upload the thumbnail multiple times.
-                if (!$this->s3_client->doesObjectExist($this->config['s3_bucket'], $key)) {
+                    // Existence on S3 check. Since this method runs on every page load, we don't want to upload the thumbnail multiple times.
+                    if (!$this->s3_client->doesObjectExist($this->config['s3_bucket'], $key)) {
 
-                    // Upload *only* the thumbnail to S3.
-                    $body = file_get_contents($local_thumbnail);
-                    $this->uploadFileToS3($key, $body, $attachment['mimetype']);
+                        // Upload *only* the thumbnail to S3.
+                        $body = file_get_contents($local_thumbnail);
+                        $this->uploadFileToS3($key, $body, $attachment['mimetype']);
+                    }
                 }
+                $block_array['THUMB_IMAGE'] = $s3_link_thumb;
+                $block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
             }
-            $block_array['THUMB_IMAGE'] = $s3_link_thumb;
-            $block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
-        }
 
-        $block_array['U_INLINE_LINK'] = $s3_link_fullsize;
-        $event['block_array'] = $block_array;
+            $block_array['U_INLINE_LINK'] = $s3_link_fullsize;
+            $event['block_array'] = $block_array;
+        }
     }
 
     /**
