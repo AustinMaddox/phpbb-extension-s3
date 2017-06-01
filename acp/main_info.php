@@ -11,19 +11,19 @@ namespace AustinMaddox\s3\acp;
 
 class main_info
 {
-    function module()
-    {
-        return [
-            'filename' => '\AustinMaddox\s3\acp\main_module',
-            'title'    => 'ACP_S3_TITLE',
-            'version'  => '1.0.2',
-            'modes'    => [
-                'settings' => [
-                    'title' => 'ACP_S3',
-                    'auth'  => 'ext_AustinMaddox/s3 && acl_a_board',
-                    'cat'   => ['ACP_S3_TITLE'],
-                ],
-            ],
-        ];
-    }
+	function module()
+	{
+		return [
+			'filename' => '\AustinMaddox\s3\acp\main_module',
+			'title'    => 'ACP_S3_TITLE',
+			'version'  => '1.0.2',
+			'modes'    => [
+				'settings' => [
+					'title' => 'ACP_S3',
+					'auth'  => 'ext_AustinMaddox/s3 && acl_a_board',
+					'cat'   => ['ACP_S3_TITLE'],
+				],
+			],
+		];
+	}
 }

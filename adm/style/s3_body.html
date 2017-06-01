@@ -7,66 +7,76 @@
 
 <!-- IF S3_ERROR -->
 <div class="errorbox"><h3>{L_WARNING}</h3>
-    <p>{S3_ERROR}</p>
+	<p>{S3_ERROR}</p>
 </div>
 <!-- ENDIF -->
 
 <form id="acp_board" method="post" action="{U_ACTION}">
-    <fieldset>
-        <dl>
-            <dt>
-                <label for="s3_aws_access_key_id">{L_ACP_S3_AWS_ACCESS_KEY_ID}</label>
-                <br>
-                <span>{L_ACP_S3_AWS_ACCESS_KEY_ID_EXPLAIN}</span>
-            </dt>
-            <dd><input type="text" id="s3_aws_access_key_id" name="s3_aws_access_key_id" value="{S3_AWS_ACCESS_KEY_ID}" maxlength="255" size="40"></dd>
-        </dl>
+	<fieldset>
+		<dl>
+			<dt>
+				<label for="s3_aws_access_key_id">{L_ACP_S3_AWS_ACCESS_KEY_ID}</label>
+				<br>
+				<span>{L_ACP_S3_AWS_ACCESS_KEY_ID_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<input type="text" id="s3_aws_access_key_id" name="s3_aws_access_key_id" value="{S3_AWS_ACCESS_KEY_ID}"
+					   maxlength="255" size="40"/>
+			</dd>
+		</dl>
 
-        <dl>
-            <dt>
-                <label for="s3_aws_secret_access_key">{L_ACP_S3_AWS_SECRET_ACCESS_KEY}</label>
-                <br>
-                <span>{L_ACP_S3_AWS_SECRET_ACCESS_KEY_EXPLAIN}</span>
-            </dt>
-            <dd><input type="text" id="s3_aws_secret_access_key" name="s3_aws_secret_access_key" value="{S3_AWS_SECRET_ACCESS_KEY}" maxlength="255" size="50"></dd>
-        </dl>
+		<dl>
+			<dt>
+				<label for="s3_aws_secret_access_key">{L_ACP_S3_AWS_SECRET_ACCESS_KEY}</label>
+				<br>
+				<span>{L_ACP_S3_AWS_SECRET_ACCESS_KEY_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<input type="text" id="s3_aws_secret_access_key" name="s3_aws_secret_access_key"
+					   value="{S3_AWS_SECRET_ACCESS_KEY}" maxlength="255" size="50"/>
+				/dd>
+		</dl>
 
-        <dl>
-            <dt>
-                <label for="s3_region">{L_ACP_S3_REGION}</label>
-                <br>
-                <span>{L_ACP_S3_REGION_EXPLAIN}</span>
-            </dt>
-            <dd><input type="text" id="s3_region" name="s3_region" value="{S3_REGION}" maxlength="255" size="30"></dd>
-        </dl>
+		<dl>
+			<dt>
+				<label for="s3_region">{L_ACP_S3_REGION}</label>
+				<br>
+				<span>{L_ACP_S3_REGION_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<input type="text" id="s3_region" name="s3_region" value="{S3_REGION}" maxlength="255" size="30"/>
+			</dd>
+		</dl>
 
-        <dl>
-            <dt>
-                <label for="s3_bucket">{L_ACP_S3_BUCKET}</label>
-                <br>
-                <span>{L_ACP_S3_BUCKET_EXPLAIN}</span>
-            </dt>
-            <dd><input type="text" id="s3_bucket" name="s3_bucket" value="{S3_BUCKET}" maxlength="255" size="30"></dd>
-        </dl>
+		<dl>
+			<dt>
+				<label for="s3_bucket">{L_ACP_S3_BUCKET}</label>
+				<br>
+				<span>{L_ACP_S3_BUCKET_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<input type="text" id="s3_bucket" name="s3_bucket" value="{S3_BUCKET}" maxlength="255" size="30"/>
+			</dd>
+		</dl>
 
-        <hr/>
+		<hr/>
 
-        <dl>
-            <dt>
-                <label>{L_ACP_S3_IS_ENABLED}</label>
-                <br>
-                <span>{L_ACP_S3_IS_ENABLED_EXPLAIN}</span>
-            </dt>
-            <dd>{S3_IS_ENABLED}</dd>
-        </dl>
+		<dl>
+			<dt>
+				<label>{L_ACP_S3_IS_ENABLED}</label>
+				<br>
+				<span>{L_ACP_S3_IS_ENABLED_EXPLAIN}</span>
+			</dt>
+			<dd>{S3_IS_ENABLED}</dd>
+		</dl>
 
-        <p class="submit-buttons">
-            <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}"/>&nbsp;
-            <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}"/>
-        </p>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}"/>&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}"/>
+		</p>
 
-        {S_FORM_TOKEN}
-    </fieldset>
+		{S_FORM_TOKEN}
+	</fieldset>
 </form>
 
 <!-- INCLUDE overall_footer.html -->
