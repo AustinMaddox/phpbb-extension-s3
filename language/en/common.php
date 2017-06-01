@@ -21,6 +21,9 @@ $lang = array_merge($lang, [
 	'ACP_S3'               => 'Settings',
 	'ACP_S3_SETTING_SAVED' => 'Settings have been saved successfully!',
 
+	'ACP_S3_ACCESS_KEYS_EXPLAIN' => 'To successfully send requests to AWS APIs, you need to have a valid set of security credentials called
+	<strong>access keys</strong>. To learn more about AWS access keys, visit the <a href="https://aws.amazon.com/developers/access-keys/"
+		   target="_blank">About Access Keys page</a> in the developer documentation.',
 
 	'ACP_S3_AWS_ACCESS_KEY_ID'         => 'AWS Access Key Id',
 	'ACP_S3_AWS_ACCESS_KEY_ID_EXPLAIN' => 'Enter your AWS Access Key Id for S3, e.g.: <samp>AKIAIOSFODNN7EXAMPLE</samp>.',
