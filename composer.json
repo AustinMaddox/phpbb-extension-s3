@@ -24,14 +24,14 @@
     }
   ],
   "require": {
-    "aws/aws-sdk-php": "^3.19.4",
+    "aws/aws-sdk-php": "^3.130.2",
     "composer/installers": "~1.0",
     "php": ">=5.5.0"
   },
   "extra": {
     "display-name": "AWS S3",
     "soft-require": {
-      "phpbb/phpbb": ">=3.1.0-RC2,<3.2@dev"
+      "phpbb/phpbb": ">=3.1.0-RC2,<3.3@dev"
     }
   }
 }
