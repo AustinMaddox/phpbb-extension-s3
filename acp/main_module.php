@@ -90,6 +90,7 @@ class main_module
 				$config->set('s3_aws_secret_access_key', $request->variable('s3_aws_secret_access_key', ''));
 				$config->set('s3_region', $request->variable('s3_region', ''));
 				$config->set('s3_bucket', $request->variable('s3_bucket', ''));
+				$config->set('s3_cdn_domain', $request->variable('s3_cdn_domain', ''));
 				$config->set('s3_is_enabled', 1);
 
 				trigger_error($user->lang('ACP_S3_SETTING_SAVED') . adm_back_link($this->u_action));
@@ -103,6 +104,7 @@ class main_module
 			'S3_AWS_SECRET_ACCESS_KEY' => $config['s3_aws_secret_access_key'],
 			'S3_REGION'                => $config['s3_region'],
 			'S3_BUCKET'                => $config['s3_bucket'],
+			'S3_CDN_DOMAIN'            => $config['s3_cdn_domain'],
 			'S3_IS_ENABLED'            => ($config['s3_is_enabled']) ? 'Enabled' : 'Disabled',
 		]);
 	}

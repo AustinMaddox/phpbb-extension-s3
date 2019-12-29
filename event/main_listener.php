@@ -139,8 +139,9 @@ class main_listener implements EventSubscriberInterface
 			$attachment = $event['attachment'];
 
 			$key = 'thumb_' . $attachment['physical_filename'];
-			$s3_link_thumb = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
-			$s3_link_fullsize = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+ 			$domain = $this->config['s3_cdn_domain'] ?: $this->config['s3_bucket'] . '.s3.amazonaws.com';
+			$s3_link_thumb = '//' . $domain . '/' . $key;
+			$s3_link_fullsize = '//' . $domain . '/' . $attachment['physical_filename'];
 			$local_thumbnail = $this->phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
 			if ($this->config['img_create_thumbnail'])
