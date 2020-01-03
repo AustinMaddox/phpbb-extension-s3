@@ -1,6 +1,6 @@
 services:
-    AustinMaddox.s3.listener:
-        class: AustinMaddox\s3\event\main_listener
+    austinmaddox.s3.listener:
+        class: austinmaddox\s3\event\main_listener
         arguments:
             - @config
             - @template

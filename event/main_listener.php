@@ -2,12 +2,12 @@
 /**
  *
  * @package       phpBB Extension - S3
- * @copyright (c) 2017 Austin Maddox
+ * @copyright (c) 2020 Austin Maddox
  * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 
-namespace AustinMaddox\s3\event;
+namespace austinmaddox\s3\event;
 
 use Aws\S3\S3Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -70,10 +70,10 @@ class main_listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return [
-			'core.user_setup'                               => 'user_setup',
+			'core.user_setup'                              => 'user_setup',
 			'core.modify_uploaded_file'                     => 'modify_uploaded_file',
 			'core.delete_attachments_from_filesystem_after' => 'delete_attachments_from_filesystem_after',
-			'core.parse_attachments_modify_template_data'   => 'parse_attachments_modify_template_data',
+			'core.parse_attachments_modify_template_data'  => 'parse_attachments_modify_template_data',
 		];
 	}
 
@@ -81,14 +81,14 @@ class main_listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = [
-			'ext_name' => 'AustinMaddox/s3',
+			'ext_name' => 'austinmaddox/s3',
 			'lang_set' => 'common',
 		];
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	/**
-	 * Event to modify uploaded file before submit to the post
+	 * Event to modify uploaded file before submit to the post.
 	 *
 	 * @param $event
 	 */
@@ -106,7 +106,7 @@ class main_listener implements EventSubscriberInterface
 	}
 
 	/**
-	 * Perform additional actions after attachment(s) deletion from the filesystem
+	 * Perform additional actions after attachment(s) deletion from the filesystem.
 	 *
 	 * @param $event
 	 */
@@ -139,8 +139,8 @@ class main_listener implements EventSubscriberInterface
 			$attachment = $event['attachment'];
 
 			$key = 'thumb_' . $attachment['physical_filename'];
-			$s3_link_thumb = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
-			$s3_link_fullsize = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
+			$s3_thumb_image = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $key;
+			$s3_link = '//' . $this->config['s3_bucket'] . '.s3.amazonaws.com/' . $attachment['physical_filename'];
 			$local_thumbnail = $this->phpbb_root_path . $this->config['upload_path'] . '/' . $key;
 
 			if ($this->config['img_create_thumbnail'])
@@ -159,11 +159,10 @@ class main_listener implements EventSubscriberInterface
 						$this->uploadFileToS3($key, $body, $attachment['mimetype']);
 					}
 				}
-				$block_array['THUMB_IMAGE'] = $s3_link_thumb;
-				$block_array['U_DOWNLOAD_LINK'] = $s3_link_fullsize;
+				$block_array['THUMB_IMAGE'] = $s3_thumb_image;
 			}
-
-			$block_array['U_INLINE_LINK'] = $s3_link_fullsize;
+			$block_array['U_DOWNLOAD_LINK'] = $s3_link;
+			$block_array['U_INLINE_LINK'] = $s3_link;
 			$event['block_array'] = $block_array;
 		}
 	}
