@@ -1,37 +1,42 @@
 {
-  "name": "AustinMaddox/s3",
-  "type": "phpbb-extension",
-  "description": "An extension that utilizes AWS S3 as the filesystem for uploaded files.",
-  "homepage": "https://github.com/AustinMaddox/phpbb-extension-s3",
-  "version": "1.0.3",
-  "keywords": [
-    "phpbb",
-    "extension",
-    "amazon web service",
-    "AWS",
-    "simple storage service",
-    "s3",
-    "phpbb-extension-s3"
-  ],
-  "time": "2017-05-15",
-  "license": "GPL-2.0",
-  "authors": [
-    {
-      "name": "Austin Maddox",
-      "email": "austin@maddoxbox.com",
-      "homepage": "https://github.com/AustinMaddox/",
-      "role": "Developer"
+    "name": "austinmaddox/s3",
+    "type": "phpbb-extension",
+    "description": "An extension that utilizes AWS S3 as the filesystem for uploaded files.",
+    "homepage": "https://github.com/AustinMaddox/phpbb-extension-s3",
+    "version": "1.0.4",
+    "time": "2019-12-31",
+    "keywords": [
+        "phpbb",
+        "extension",
+        "amazon web service",
+        "AWS",
+        "simple storage service",
+        "s3",
+        "phpbb-extension-s3"
+    ],
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Austin Maddox",
+            "email": "austin@maddoxbox.com",
+            "homepage": "https://github.com/AustinMaddox/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "aws/aws-sdk-php": "^3.130",
+        "composer/installers": "~1.0.0"
+    },
+    "extra": {
+        "display-name": "AWS S3",
+        "version-check": {
+            "host": "www.phpbb.com",
+            "directory": "/customise/db/extension/aws_s3",
+            "filename": "version_check"
+        },
+        "soft-require": {
+			"phpbb/phpbb": "~3.2.0"
+		}
     }
-  ],
-  "require": {
-    "aws/aws-sdk-php": "^3.19.4",
-    "composer/installers": "~1.0",
-    "php": ">=5.5.0"
-  },
-  "extra": {
-    "display-name": "AWS S3",
-    "soft-require": {
-      "phpbb/phpbb": ">=3.1.0-RC2,<3.2@dev"
-    }
-  }
 }

@@ -2,12 +2,12 @@
 /**
  *
  * @package       phpBB Extension - S3
- * @copyright (c) 2017 Austin Maddox
+ * @copyright (c) 2020 Austin Maddox
  * @license       http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 
-namespace AustinMaddox\s3\migrations;
+namespace austinmaddox\s3\migrations;
 
 class release_0_1_0 extends \phpbb\db\migration\migration
 {
@@ -33,7 +33,7 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 					'acp',
 					'ACP_S3_TITLE',
 					[
-						'module_basename' => '\AustinMaddox\s3\acp\main_module',
+						'module_basename' => '\austinmaddox\s3\acp\main_module',
 						'modes'           => ['settings'],
 					],
 				],
