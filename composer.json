@@ -3,7 +3,7 @@
     "type": "phpbb-extension",
     "description": "An extension that utilizes AWS S3 as the filesystem for uploaded files.",
     "homepage": "https://github.com/AustinMaddox/phpbb-extension-s3",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "time": "2019-12-31",
     "keywords": [
         "phpbb",
