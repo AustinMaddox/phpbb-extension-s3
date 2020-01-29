@@ -6,7 +6,7 @@ An extension for [phpBB 3.x](https://www.phpbb.com) that utilizes AWS S3 as the 
 
 ## Installation
 
-Clone into phpBB/ext/austinmaddox/s3:
+Clone into phpBB/ext/AustinMaddox/s3:
 
     git clone https://github.com/AustinMaddox/phpbb-extension-s3.git phpBB/ext/AustinMaddox/s3
 

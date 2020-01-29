@@ -7,7 +7,7 @@
  *
  */
 
-namespace austinmaddox\s3\migrations;
+namespace AustinMaddox\s3\migrations;
 
 class release_0_1_0 extends \phpbb\db\migration\migration
 {
@@ -33,7 +33,7 @@ class release_0_1_0 extends \phpbb\db\migration\migration
 					'acp',
 					'ACP_S3_TITLE',
 					[
-						'module_basename' => '\austinmaddox\s3\acp\main_module',
+						'module_basename' => '\AustinMaddox\s3\acp\main_module',
 						'modes'           => ['settings'],
 					],
 				],

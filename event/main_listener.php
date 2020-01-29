@@ -7,7 +7,7 @@
  *
  */
 
-namespace austinmaddox\s3\event;
+namespace AustinMaddox\s3\event;
 
 use Aws\S3\S3Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -81,7 +81,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = [
-			'ext_name' => 'austinmaddox/s3',
+			'ext_name' => 'AustinMaddox/s3',
 			'lang_set' => 'common',
 		];
 		$event['lang_set_ext'] = $lang_set_ext;
