@@ -41,6 +41,9 @@ $lang = array_merge($lang, [
 	'ACP_S3_BUCKET_EXPLAIN' => 'Enter the name of your S3 bucket, e.g.: <samp>example-bucket</samp>. The bucket must already be created in your AWS account.',
 	'ACP_S3_BUCKET_INVALID' => 'You must enter a valid S3 bucket. For help working with Amazon S3 buckets, see the documentation here: http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html',
 
+	'ACP_S3_CDN_DOMAIN'         => 'CDN Domain (Optional)',
+	'ACP_S3_CDN_DOMAIN_EXPLAIN' => 'Enter the domain for your CDN, e.g.: <samp>media.example.com</samp> or <samp>d123456abcdef8.cloudfront.net</samp>.',
+
 	'ACP_S3_IS_ENABLED'         => 'Is the extension enabled?',
 	'ACP_S3_IS_ENABLED_EXPLAIN' => 'Displays whether or not the extension is enabled and will use S3 for uploading and delivering your attachments.',
 ]);
