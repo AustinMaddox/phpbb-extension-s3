@@ -2,9 +2,9 @@ services:
     AustinMaddox.s3.listener:
         class: AustinMaddox\s3\event\main_listener
         arguments:
-            - @config
-            - @template
-            - @user
+            - '@config'
+            - '@template'
+            - '@user'
             - %core.root_path%
         tags:
             - { name: event.listener }
