@@ -7,13 +7,13 @@
  *
  */
 
-namespace AustinMaddox\s3\migrations;
+namespace austinmaddox\s3\migrations;
 
 class release_1_0_2 extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return ['\AustinMaddox\s3\migrations\release_0_1_0'];
+		return ['\austinmaddox\s3\migrations\release_0_1_0'];
 	}
 
 	public function update_data()

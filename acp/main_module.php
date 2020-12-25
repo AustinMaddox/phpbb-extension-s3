@@ -7,7 +7,7 @@
  *
  */
 
-namespace AustinMaddox\s3\acp;
+namespace austinmaddox\s3\acp;
 
 class main_module
 {
@@ -20,11 +20,11 @@ class main_module
 		$user->add_lang('acp/common');
 		$this->tpl_name = 's3_body';
 		$this->page_title = $user->lang('ACP_S3_TITLE');
-		add_form_key('AustinMaddox/s3');
+		add_form_key('austinmaddox/s3');
 
 		if ($request->is_set_post('submit'))
 		{
-			if (!check_form_key('AustinMaddox/s3'))
+			if (!check_form_key('austinmaddox/s3'))
 			{
 				trigger_error('FORM_INVALID');
 			}
